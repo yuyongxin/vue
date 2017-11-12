@@ -1,0 +1,41 @@
+var path =require('path')
+//导入根据模版文件在内存中生成的index.html的插件
+var HtmlWebpackPlugin=require('html-webpack-plugin')
+module.exports={
+    entry:'./src/main.js',
+    output:{
+        path:path.join(__dirname,'dist'),
+        filename:'bundle.js'
+    },
+    module:{
+        rules:[//2.x的写法
+            {
+                test:/\.vue$/,
+                use:[
+                    {
+                        loader:"vue-loader"
+                    }
+                ]
+            },
+            {
+                test:/\.css$/,
+                use:[
+                    {loader:"style-loader"},
+                    {loader:"css-loader"}
+                ]
+            },
+            {
+                test:/\.(ttf|png|gif|svg)$/,
+                use:[
+                    {loader:'url-loader'}
+                ]
+            }
+        ]
+    },
+    plugins:[
+        new HtmlWebpackPlugin({
+            template:'./template.html',
+            filename:'index.html'
+        })
+    ]
+}
